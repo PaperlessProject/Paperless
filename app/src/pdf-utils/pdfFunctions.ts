@@ -15,8 +15,7 @@ export const start = async (tool: string, bearerToken: string) => {
   const res = await fetchUtil(`https://api.ilovepdf.com/v1/start/${tool}`, {
     method: 'GET',
     headers: {
-
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${bearerToken}`,
     },
   });
@@ -27,20 +26,17 @@ export const uploadFiles = async (
   serverUrl: string,
   taskId: string,
   formData: FormData,
-  bearerToken: string,
-
+  bearerToken: string
 ) => {
-  formData.append("task", taskId);
-
+  formData.append('task', taskId);
 
   const response = await fetch(`https://${serverUrl}/v1/upload`, {
-    method: "POST",
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${bearerToken}`,
     },
     body: formData,
   });
-
 
   if (!response.ok) {
     throw new Error(
@@ -49,8 +45,7 @@ export const uploadFiles = async (
   }
 
   const res = await response.json();
-  return res
-
+  return res;
 };
 
 export const process = async (
@@ -79,7 +74,7 @@ export const download = async (
   task: string,
   bearerToken: string
 ) => {
-  const res = await fetchUtil(`https://${server}/v1/download/${task}`, {
+  const res = await fetch(`https://${server}/v1/download/${task}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -87,5 +82,4 @@ export const download = async (
     },
   });
   return res;
-
 };
