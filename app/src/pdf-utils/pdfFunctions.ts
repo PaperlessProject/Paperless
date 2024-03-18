@@ -37,7 +37,7 @@ export const uploadFiles = async (
     method: "POST",
     headers: {
 
-      'Content-Type': 'applications/json',
+    
 
       Authorization: `Bearer ${bearerToken}`,
     },
