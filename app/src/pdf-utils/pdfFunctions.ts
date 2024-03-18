@@ -22,31 +22,18 @@ export const start = async (tool: string, bearerToken: string) => {
   return res;
 };
 
-export const upload = async (
-  server: string,
-  task: string,
-  file: File,
-  bearerToken: string
-) => {
-  const res = await fetch(`https://${server}/v1/upload/`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${bearerToken}`,
-    },
-    body: JSON.stringify({ task, file }),
-  });
-  return res;
-};
-
 export const process = async (
   server: string,
   task: string,
   tool: string,
-  files: File,
+  files: {
+    server_filename: string;
+    filename: string;
+  }[],
   bearerToken: string
 ) => {
   const res = await fetchUtil(`https://${server}/v1/process`, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${bearerToken}`,
