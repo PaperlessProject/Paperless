@@ -9,7 +9,7 @@ export default function Sidebar() {
   const items: NavItems = [
     { title: "Convert to PDF", icon: "", path: "/" },
     { title: "Convert from PDF", icon: "", path: "/fromPDF" },
-    { title: "Compress", icon: "", path: "/toPDF" },
+    { title: "Compress", icon: "", path: "/compress" },
   ] as const;
 
   const location = useLocation();

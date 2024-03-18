@@ -13,8 +13,8 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<ToPDF />} />
-          <Route path="/toPDF" element={<ToPDF />} />
           <Route path="/fromPDF" element={<FromPDF />} />
+          <Route path="/compress" element={<Compress/>} />
         </Routes>
       </Layout>
     </BrowserRouter>

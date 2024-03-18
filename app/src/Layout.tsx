@@ -6,14 +6,10 @@ export interface Children {
 }
 
 export default function Layout({ children }: Children) {
-  const sidebarItems: NavItems = [
-    { title: "Convert to PDF", icon: "", path: "/" },
-    { title: "Convert from PDF", icon: "", path: "/fromPDF" },
-    { title: "Compress", icon: "", path: "/toPDF" },
-  ] as const;
+
 
   return (
-    <div>
+    <div className="flex ">
       <div>
         <Sidebar></Sidebar>
       </div>
