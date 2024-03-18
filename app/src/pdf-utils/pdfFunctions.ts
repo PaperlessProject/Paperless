@@ -36,9 +36,6 @@ export const uploadFiles = async (
   const response = await fetch(`https://${serverUrl}/v1/upload`, {
     method: "POST",
     headers: {
-
-    
-
       Authorization: `Bearer ${bearerToken}`,
     },
     body: formData,
@@ -51,10 +48,9 @@ export const uploadFiles = async (
     );
   }
 
-  const data = await response.json();
-  return data;
+  const res = await response.json();
+  return res
 
-  return res;
 };
 
 export const process = async (
