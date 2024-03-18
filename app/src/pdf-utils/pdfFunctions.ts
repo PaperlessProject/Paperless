@@ -11,7 +11,7 @@ export const getAuthToken = async (publicKey: string) => {
   return res;
 };
 
-/* export const startTask = async (authToken: string, task: string) => {
+export const startTask = async (authToken: string, task: string) => {
   const res = await fetchUtil(`https://api.ilovepdf.com/v1/start/${task}`, {
     method: 'POST',
     headers: {
@@ -34,7 +34,7 @@ export const uploadFile = async (authToken: string, file: File) => {
     body: formData,
   });
   return res;
-}; */
+};
 
 export const processTask = async (authToken: string, task: string) => {
   const res = await fetchUtil(`https://api.ilovepdf.com/v1/process/${task}`, {
