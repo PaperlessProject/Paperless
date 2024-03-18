@@ -13,11 +13,11 @@ export default function Layout({ children }: Children) {
   ] as const;
 
   return (
-    <div>
-      <div>
+    <div className="flex">
+      <div className="" >
         <Sidebar></Sidebar>
       </div>
-      <div>{children}</div>
+      {children}
     </div>
   );
 }
