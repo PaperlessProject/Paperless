@@ -6,10 +6,6 @@ export default function FromPDF() {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [file, setFile] = useState<File>() as [File, () => void];
 
-  const handleClick = async () => {
-    //make different logic for when isReady is true(download logic)
-  };
-
   return (
     <div>
       <div className="h-full flex flex-col justify-center items-center">
@@ -17,7 +13,12 @@ export default function FromPDF() {
           fileState={{ file, setFile }}
           heading="Convert from PDF"
         />
-        <Button onClick={handleClick} isReady={isReady} />
+        <Button
+          tool="pdfjpg"
+          isReady={isReady}
+          file={file}
+          setIsReady={setIsReady}
+        />
       </div>
     </div>
   );
