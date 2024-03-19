@@ -1,9 +1,9 @@
 import "./App.css";
-import ToPDF from "./pages/ToPDF.1";
 import FromPDF from "./pages/FromPDF";
 import Compress from "./pages/Compress";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
+import ToPDF from "./pages/ToPDF";
 
 export default function App() {
   return (
