@@ -1,6 +1,6 @@
 # Paperless
 
-Created by Brandon Ramos, Daniel Figueroa, and Isiah Hicks.
+Created by Brandon Ramos, Daniel Figueroa, and Isaiah Hickerson.
 
 ## 🚀 Mission statement
 
