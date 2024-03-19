@@ -5,9 +5,10 @@ import {
   process,
   download,
 } from '../pdf-utils/pdfFunctions';
-import { publicKey } from '../../keys';
+import publicKey from '../../keys';
 import { useState } from 'react';
 import JSZip from 'jszip';
+import ClipLoader from "react-spinners/ClipLoader";
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -92,6 +93,8 @@ export default function Button({ isReady, tool, file, setIsReady }: Props) {
         onClick={handleClick}
         className="border-2 flex  px-5 py-1 bg-red-500 rounded-lg hover:red-600 focus:outline-none items-center justify-center text-white transform transition-transform duration-300 hover:scale-105 text-lg shadow-md mt-5"
       >
+
+    <ClipLoader color="#36d7b7" />
         {isReady ? 'Download' : 'Upload'}
       </button>
     </>
