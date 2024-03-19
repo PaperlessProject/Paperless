@@ -58,7 +58,7 @@ export const process = async (
   }[],
   bearerToken: string
 ) => {
-  const res = await fetchUtil(`https://${server}/v1/process`, {
+  const res = await fetch(`https://${server}/v1/process`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -77,9 +77,8 @@ export const download = async (
   const res = await fetch(`https://${server}/v1/download/${task}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${bearerToken}`,
     },
   });
-  return res;
+  return res.blob();
 };

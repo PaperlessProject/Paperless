@@ -1,8 +1,15 @@
-import { getAuthToken, start, uploadFiles } from "../pdf-utils/pdfFunctions";
-import publicKey from "../../keys";
-import { useState } from "react";
+import {
+  getAuthToken,
+  start,
+  uploadFiles,
+  process,
+  download,
+} from '../pdf-utils/pdfFunctions';
+import { publicKey } from '../../keys';
+import { useState } from 'react';
+import JSZip from 'jszip';
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   isReady: boolean;
@@ -12,47 +19,81 @@ interface Props {
 }
 
 export default function Button({ isReady, tool, file, setIsReady }: Props) {
-  const [uploadResult, setUploadResult] = useState<any>(null);
+  const [uploadRes, setUploadRes] = useState<
+    { server_filename: string; filename: string }[]
+  >([]);
+  const [task, setTask] = useState<string>('');
+  const [server, setServer] = useState<string>('');
 
   const handleClick = async () => {
-    //make different logic for when isReady is true(download logic)
     try {
       const token = await getAuthToken(publicKey);
-      console.log("Received token:", token);
 
-      const startResult = await start("merge", token);
-      console.log("Start result:", startResult);
+      if (!isReady) {
+        if (!file) {
+          return 'error';
+        }
+        const { server, task } = await start(tool, token);
+        setServer(server);
+        setTask(task);
+        const formData = new FormData();
+        formData.append('file', file);
 
-      const serverUrl = startResult.server;
-      const taskId = startResult.task;
+        const upload = await uploadFiles(server, task, formData, token);
+        const newUploadRes = [
+          ...uploadRes,
+          { server_filename: upload.server_filename, filename: file.name },
+        ];
+        setUploadRes(newUploadRes);
+        const processRes = await process(
+          server,
+          task,
+          tool,
+          newUploadRes,
+          token
+        );
 
-      if (!file) {
-        return "error";
+        if (processRes) setIsReady(true);
+      } else {
+        const blob = await download(server, task, token);
+
+        if (blob) {
+          setIsReady(false);
+
+          let newBlob;
+          if (blob.type === 'application/zip') {
+            const zip = new JSZip();
+            const zipData = await zip.loadAsync(blob);
+            const fileName = Object.keys(zipData.files)[0];
+            const fileData = await zipData.file(fileName)!.async('blob');
+            newBlob = new Blob([fileData], { type: 'image/jpg' });
+          } else {
+            newBlob = blob;
+          }
+
+          const link = document.createElement('a');
+          const url = URL.createObjectURL(newBlob);
+          link.href = url;
+          link.download = `${file.name.split('.').slice(0, -1).join('.')}.${
+            tool === 'pdfjpg' ? 'jpg' : 'pdf'
+          }`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
       }
-
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const uploadResult = await uploadFiles(
-        serverUrl,
-        taskId,
-        formData,
-        token
-      );
-
-      console.log("Upload result:", uploadResult);
-      setUploadResult({ ...uploadResult, name: file.name });
-      setIsReady(true);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
   return (
-    <button
-      onClick={handleClick}
-      className="border-2 flex  px-5 py-1 bg-red-500 rounded-lg hover:red-600 focus:outline-none items-center justify-center text-white transform transition-transform duration-300 hover:scale-105 text-lg shadow-md mt-5"
-    >
-      {isReady ? "Download" : "Upload"}
-    </button>
+    <>
+      <button
+        onClick={handleClick}
+        className="border-2 flex  px-5 py-1 bg-red-500 rounded-lg hover:red-600 focus:outline-none items-center justify-center text-white transform transition-transform duration-300 hover:scale-105 text-lg shadow-md mt-5"
+      >
+        {isReady ? 'Download' : 'Upload'}
+      </button>
+    </>
   );
 }
