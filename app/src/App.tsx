@@ -1,7 +1,5 @@
-
-
 import "./App.css";
-import ToPDF from "./pages/ToPDF";
+import ToPDF from "./pages/ToPDF.1";
 import FromPDF from "./pages/FromPDF";
 import Compress from "./pages/Compress";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -14,10 +12,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<ToPDF />} />
           <Route path="/fromPDF" element={<FromPDF />} />
-          <Route path="/compress" element={<Compress/>} />
+          <Route path="/compress" element={<Compress />} />
         </Routes>
       </Layout>
     </BrowserRouter>
   );
-
 }
