@@ -1,5 +1,5 @@
 interface fileState {
-  file: File;
+  file: File | null;
   setFile: (data: File) => void;
 }
 
@@ -7,8 +7,8 @@ interface Props {
   heading: string;
   fileState: fileState;
 }
-const ToolInterface = ({ heading, fileState }: Props) => {
-  const { file, setFile } = fileState;
+export default function ToolInterface ({ heading, fileState }: Props)  {
+  const { setFile } = fileState;
   return (
     <div className="flex items-center justify-center flex-col gap-10 ">
       <div className="flex">
@@ -29,4 +29,3 @@ const ToolInterface = ({ heading, fileState }: Props) => {
   );
 };
 
-export default ToolInterface;

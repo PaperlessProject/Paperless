@@ -1,9 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { NavItems } from "../Layout";
 
-interface Props {
-  items: NavItems;
-}
 
 export default function Sidebar() {
   const items: NavItems = [
